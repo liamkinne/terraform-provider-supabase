@@ -2,13 +2,14 @@ package provider
 
 import (
 	"context"
-	"net/http"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
 	"github.com/hashicorp/terraform-plugin-framework/provider/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+
+	"github.com/supabase/cli/pkg/api"
 )
 
 // Ensure SupabaseProvider satisfies various provider interfaces.
@@ -36,7 +37,7 @@ func (p *SupabaseProvider) Schema(ctx context.Context, req provider.SchemaReques
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"endpoint": schema.StringAttribute{
-				MarkdownDescription: "Example provider attribute",
+				MarkdownDescription: "Management API endpoint",
 				Optional:            true,
 			},
 		},
@@ -53,10 +54,11 @@ func (p *SupabaseProvider) Configure(ctx context.Context, req provider.Configure
 	}
 
 	// Configuration values are now available.
-	// if data.Endpoint.IsNull() { /* ... */ }
+	var endpoint = "api.supabase.com"
+	if data.Endpoint.IsNull() { endpoint = data.Endpoint.ValueString() }
 
 	// Example client configuration for data sources and resources
-	client := http.DefaultClient
+	client, _ := api.NewClientWithResponses(endpoint)
 	resp.DataSourceData = client
 	resp.ResourceData = client
 }
