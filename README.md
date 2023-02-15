@@ -62,3 +62,7 @@ In order to run the full suite of Acceptance tests, run `make testacc`.
 ```shell
 make testacc
 ```
+
+## References
+
+- [Supabase CLI](https://github.com/supabase/cli) (provides the HTTP client)
