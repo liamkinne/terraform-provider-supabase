@@ -2,6 +2,7 @@ package provider
 
 import (
 	"context"
+	"os"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
@@ -25,7 +26,8 @@ type SupabaseProvider struct {
 
 // SupabaseProviderModel describes the provider data model.
 type SupabaseProviderModel struct {
-	Endpoint types.String `tfsdk:"endpoint"`
+	AccessToken types.String `tfsdk:"access_token"`
+	Endpoint    types.String `tfsdk:"endpoint"`
 }
 
 func (p *SupabaseProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
@@ -36,8 +38,12 @@ func (p *SupabaseProvider) Metadata(ctx context.Context, req provider.MetadataRe
 func (p *SupabaseProvider) Schema(ctx context.Context, req provider.SchemaRequest, resp *provider.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
+			"access_token": schema.StringAttribute{
+				MarkdownDescription: "Management API access token.",
+				Optional:            true,
+			},
 			"endpoint": schema.StringAttribute{
-				MarkdownDescription: "Management API endpoint",
+				MarkdownDescription: "Management API endpoint.",
 				Optional:            true,
 			},
 		},
@@ -53,9 +59,15 @@ func (p *SupabaseProvider) Configure(ctx context.Context, req provider.Configure
 		return
 	}
 
-	// Configuration values are now available.
+	var access_token = os.Getenv("SUPABASE_TOKEN")
+	if access_token == "" {
+		access_token = data.AccessToken.ValueString()
+	}
+
 	var endpoint = "api.supabase.com"
-	if data.Endpoint.IsNull() { endpoint = data.Endpoint.ValueString() }
+	if data.Endpoint.IsNull() {
+		endpoint = data.Endpoint.ValueString()
+	}
 
 	// Example client configuration for data sources and resources
 	client, _ := api.NewClientWithResponses(endpoint)
