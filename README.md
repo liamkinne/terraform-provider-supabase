@@ -66,3 +66,4 @@ make testacc
 ## References
 
 - [Supabase CLI](https://github.com/supabase/cli) (provides the HTTP client)
+- [Management API Reference](https://supabase.com/docs/reference/api/introduction)
