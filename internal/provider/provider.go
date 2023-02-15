@@ -84,6 +84,7 @@ func (p *SupabaseProvider) Resources(ctx context.Context) []func() resource.Reso
 func (p *SupabaseProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
 		NewExampleDataSource,
+		NewOrganizationDataSource,
 	}
 }
 
