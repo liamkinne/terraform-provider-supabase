@@ -3,12 +3,13 @@ package provider
 import (
 	"context"
 	"fmt"
-	"net/http"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
+
+	"github.com/supabase/cli/pkg/api"
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
@@ -20,7 +21,7 @@ func NewExampleDataSource() datasource.DataSource {
 
 // ExampleDataSource defines the data source implementation.
 type ExampleDataSource struct {
-	client *http.Client
+	client *api.ClientWithResponses
 }
 
 // ExampleDataSourceModel describes the data source data model.
@@ -57,7 +58,7 @@ func (d *ExampleDataSource) Configure(ctx context.Context, req datasource.Config
 		return
 	}
 
-	client, ok := req.ProviderData.(*http.Client)
+	client, ok := req.ProviderData.(*api.ClientWithResponses)
 
 	if !ok {
 		resp.Diagnostics.AddError(
