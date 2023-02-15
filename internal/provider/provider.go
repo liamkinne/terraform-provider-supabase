@@ -2,6 +2,7 @@ package provider
 
 import (
 	"context"
+	"net/http"
 	"os"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
@@ -70,7 +71,13 @@ func (p *SupabaseProvider) Configure(ctx context.Context, req provider.Configure
 	}
 
 	// Example client configuration for data sources and resources
-	client, _ := api.NewClientWithResponses(endpoint)
+	var option = api.WithRequestEditorFn(func(ctx context.Context, req *http.Request) error {
+		req.Header.Add("Authorization", "Bearer "+access_token)
+
+		return nil
+	})
+	client, _ := api.NewClientWithResponses(endpoint, option)
+
 	resp.DataSourceData = client
 	resp.ResourceData = client
 }
