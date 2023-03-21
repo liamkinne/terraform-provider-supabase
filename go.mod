@@ -4,10 +4,11 @@ go 1.18
 
 require (
 	github.com/hashicorp/terraform-plugin-docs v0.13.0
-	github.com/hashicorp/terraform-plugin-framework v1.1.1
+	github.com/hashicorp/terraform-plugin-framework v1.2.0
 	github.com/hashicorp/terraform-plugin-go v0.14.3
 	github.com/hashicorp/terraform-plugin-log v0.8.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.24.1
+	github.com/supabase/cli v1.38.1
 )
 
 require (
@@ -57,7 +58,6 @@ require (
 	github.com/russross/blackfriday v1.6.0 // indirect
 	github.com/shopspring/decimal v1.3.1 // indirect
 	github.com/spf13/cast v1.5.0 // indirect
-	github.com/supabase/cli v1.38.1 // indirect
 	github.com/vmihailenco/msgpack v4.0.4+incompatible // indirect
 	github.com/vmihailenco/msgpack/v4 v4.3.12 // indirect
 	github.com/vmihailenco/tagparser v0.1.1 // indirect
