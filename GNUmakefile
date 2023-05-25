@@ -5,6 +5,11 @@ default: testacc
 pull-spec:
 	curl https://api.supabase.com/api/v1-json | jq . > internal/client/spec-v1.json
 
+# generate docs and openapi client code
+.PHONY: gen
+gen:
+	go generate ./... -v
+
 # Run acceptance tests
 .PHONY: testacc
 testacc:

@@ -1,0 +1,7 @@
+package: client
+generate:
+  client: true
+  models: true
+output: ./api.gen.go
+compatibility:
+  old-enum-conflicts: true
