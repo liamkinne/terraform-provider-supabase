@@ -84,14 +84,12 @@ func (p *SupabaseProvider) Configure(ctx context.Context, req provider.Configure
 
 func (p *SupabaseProvider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
-		NewExampleResource,
 		NewOrganizationResource,
 	}
 }
 
 func (p *SupabaseProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
-		NewExampleDataSource,
 		NewOrganizationDataSource,
 	}
 }
